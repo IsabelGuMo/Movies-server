@@ -1,8 +1,9 @@
 const express = require('express');
+const autorize = require('../../utils/middlewares/auth');
 const router = express.Router();
 const actorsSchema = require('../models/actors.model');
 
-router.route('/actors').get((req, res) => {
+router.route('/actors').get(autorize, (req, res) => {
     actorsSchema.find((error, response) => {
         if (error) {
             return next(error)
@@ -21,7 +22,6 @@ router.route('/actors/:id').delete(async(req, res, next) => {
             message: 'Actor Deleted',
         })
     });
-    
 });
 
 router.route('/actors/:id').put(async(req, res, next) => {
@@ -32,11 +32,10 @@ router.route('/actors/:id').put(async(req, res, next) => {
             res.status(200).json({
                 message: 'Actors Updated',
             })
-    });
-    
+    });   
 });
 
-router.post('/actors', (req, res, next) => {
+router.post('/actors', authorize, (req, res, next) => {
     const actor = new actorsSchema({
         name: req.body.name,
         age: req.body.age,

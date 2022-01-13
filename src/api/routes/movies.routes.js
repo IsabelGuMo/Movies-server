@@ -1,4 +1,5 @@
 const express = require('express');
+const autorize = require('../../utils/middlewares/auth');
 const router = express.Router();
 const moviesSchema = require('../models/movies.model');
 
@@ -17,7 +18,6 @@ router.route('/movies/:id').delete(async(req, res,next) => {
             message: 'Movie Deleted',
         });
     });
-    
 });
 
 router.route('/movies/:id').put(async(req, res, next) => {
@@ -30,7 +30,6 @@ router.route('/movies/:id').put(async(req, res, next) => {
             message: 'Movie Updated',
         });
     });
-    
 });
 
 router.post('/movies', (req, res, next) => {
